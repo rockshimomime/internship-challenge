@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html data-ng-app="myApp">
+<head>
+  <title>Carteira de vacinação</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top"><!-- início do navbar -->
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Minha vida</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a ui-sref="listar">Cadastro</a></li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- fim do navbar -->
+
+  <div class="container page" data-ng-controller="CadastroCtrl as ctrl"><!-- início do container da página -->
+
+    <form name="ctrl.form" data-ng-submit="ctrl.submitForm(ctrl.data)" novalidate><!-- início do form -->
+      <nav class="navbar navbar-default">
+        <button type="submit" class="btn btn-success navbar-btn button" data-ng-disabled="ctrl.form.$invalid">Salvar</button>
+        <button type="reset" class="btn btn-default navbar-btn button" data-ng-click="ctrl.limpar();" data-ng-disabled="ctrl.form.$invalid">Limpar</button>
+      </nav>
+      <div class="form-group">
+       <label for="codigo">Nome da Vacina:</label>
+        <input type="text" class="form-control" data-ls-module="charCounter" maxlength="200" id="codigo" name="codigo" data-ng-model="ctrl.data.codigo" data-ng-required="ctrl.form.codigo.$error.required"/>
+      </div>
+      <div class="form-group">
+        <label for="descricao">Data de aplicação:</label>
+        <input type="date" min="1940-01-01" max="2017-10-31" class="form-control" id="descricao" name="descricao" data-ng-model="ctrl.data.descricao" data-ng-required="ctrl.form.descricao.$error.required"/>
+      </div>
+      <div class="form-group">
+        <label for="marca">Cadastro no site:</label>
+        <input type="date" min="1940-01-01" max="2017-10-31" class="form-control" id="marca" data-ng-required="ctrl.form.descricao.$error.required" data-ng-model="ctrl.data.marca" />
+      </div>
+    </form><!-- fim do form -->
+
+    <div class="jumbotron"><!-- início do jumbotron -->
+
+
+  	<table class="table table-striped"><!-- início do table -->
+    	 <th>Vacina</th>
+        <th>Aplicação</th>
+        <th>Cadastro</th>
+        <th>Edição</th>
+        <th></th>
+        <th></th>
+    	<tbody>
+    		<tr data-ng-repeat="row in ctrl.lista">
+        <td data-ng-bind="row.codigo"></td>
+        <td data-ng-bind="row.descricao | date: 'MMM d, y'"></td>
+        <td data-ng-bind="row.marca | date: 'MMM d, y'"></td>
+    		<td><button class="btn glyphicon glyphicon-pencil" data-ng-click="ctrl.editar(row, $index);"></button></td>
+    		<td><button class="btn glyphicon glyphicon-trash" data-ng-click="ctrl.remover($index);"></button></td>
+    		</tr>
+    	</tbody>
+  	</table><!-- fim do form -->
+    </div><!-- fim do jumbotron -->
+
+  </div><!-- fim do container da página -->
+
+  <!-- Import the javascript files by cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js" type="text/javascript"></script>
+
+  <!-- Import the local angularjs files -->
+  <script src="js/app.js" type="text/javascript"></script>
+  <script src="js/controller/cadastroCtrl.js" type="text/javascript"></script>
+</body>
+</html>
